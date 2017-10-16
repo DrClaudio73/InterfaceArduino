@@ -43,7 +43,6 @@ if Autofind == "YES":
         ]
         #print("arduino_ports: ",arduino_ports)
         #print("arduino_ports[0]: ",arduino_ports[0])
-        print("length: ", type(arduino_ports),len(arduino_ports))
         if len(arduino_ports)>0:
                 menu_scelta_UART.append(arduino_ports[0])
                 menu_scelta_UART.append("None")
