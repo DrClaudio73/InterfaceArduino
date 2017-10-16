@@ -28,11 +28,12 @@ for linea in configurazione:
 	if "Autofind" in linea: Autofind=linea.strip("Autofind= ").upper()
 
 defaultUART=defaultUART.upper()
+"""
 print(baudrate)
 print(useDefaultUART)
 print(defaultUART)
 print(Autofind)
-
+"""
 menu_scelta_UART=[]
 if Autofind == "YES":
         arduino_ports = [
@@ -40,16 +41,19 @@ if Autofind == "YES":
             for p in serial.tools.list_ports.comports()
             if 'Arduino' in p.description
         ]
-        print("arduino_ports: ",arduino_ports)
-        print("arduino_ports[0]: ",arduino_ports[0])
-        
-        if len(arduino_ports)>=1:
+        #print("arduino_ports: ",arduino_ports)
+        #print("arduino_ports[0]: ",arduino_ports[0])
+        print("length: ", type(arduino_ports),len(arduino_ports))
+        if len(arduino_ports)>0:
                 menu_scelta_UART.append(arduino_ports[0])
                 menu_scelta_UART.append("None")
                 numeroUART=0
                 useDefaultUART="NO"
         else:
-                print("No Arduino found.... please specify PORT")
+                if (useDefaultUART=="YES"):
+                        print("No Arduino found in automode.... try to open default port specified in configuration file")
+                else:
+                        print("No Arduino found in automode.... please specify serial PORT")
                 Autofind = "NO"
 else:
         Autofind = "NO"
