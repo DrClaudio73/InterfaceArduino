@@ -1,4 +1,4 @@
 baudrate= 57200
-useDefaultUART= Yet
+useDefaultUART= Yes
 default_UART= COM31
 Autofind= No
