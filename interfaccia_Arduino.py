@@ -50,7 +50,7 @@ if Autofind == "YES":
                 useDefaultUART="NO"
         else:
                 if (useDefaultUART=="YES"):
-                        print("No Arduino found in automode.... try to open default port specified in configuration file")
+                        print("No Arduino found in automode.... try to open default serial PORT specified in configuration file")
                 else:
                         print("No Arduino found in automode.... please specify serial PORT")
                 Autofind = "NO"
@@ -66,7 +66,7 @@ else:
 
 if (Autofind == "NO") and (useDefaultUART=="NO"):
         menu_scelta_UART=["SELECTION OF SERIAL PORT NUMBER TO USE"]
-        lx_win = "windows"
+        lx_win = "Windows"
         for p in ports:
                 #print(p)
                 #print(p[0])
@@ -95,8 +95,8 @@ print("Autofind: ",Autofind)
 print("useDefaultUART: ",useDefaultUART)
 print("menu_scelta_UART[numeroUART]: ",menu_scelta_UART[numeroUART])
 print("menu_scelta_UART: ",menu_scelta_UART)
+#input("AAAA:")
 
-input("AAAA:")
 if not(debug):
 	if menu_scelta_UART[numeroUART+1]=="/dev/ttyS0":
 		ser = serial.Serial("/dev/ttyS0", baudrate, timeout=3)
