@@ -27,15 +27,14 @@ for linea in configurazione:
 	if "default_UART" in linea: defaultUART=linea.strip("default_UART= ").strip("\n")         
 	if "Autofind" in linea: Autofind=linea.strip("Autofind= ").upper()
 
-defaultUART=defaultUART.upper()
-"""
 print(baudrate)
 print(useDefaultUART)
 print(defaultUART)
 print(Autofind)
-"""
+input("vai!!!!>>>")
+
 menu_scelta_UART=[]
-if Autofind == "YES":
+if "YES" in Autofind:
         arduino_ports = [
             p.device
             for p in serial.tools.list_ports.comports()
@@ -81,7 +80,7 @@ if (Autofind == "NO") and (useDefaultUART=="NO"):
                     
         if (lx_win=="Linux"):
                 menu_scelta_UART.append("/dev/ttyS0")
-                print("ports",arduino_ports)
+                #print("ports",arduino_ports)
 
         #input("avanti")
         menu_scelta_UART.append("Cancel")
