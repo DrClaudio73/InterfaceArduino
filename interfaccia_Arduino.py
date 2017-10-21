@@ -1,4 +1,5 @@
 import serial
+import subprocess
 from time import sleep as dormi
 from lib_menu import menu_scelta
 from lib_Arduino_Funcs import CreaDb, LeggiIn, ScriviOut, SetPinMode, GetPinMode, PrintArdStatus
@@ -27,11 +28,13 @@ for linea in configurazione:
 	if "default_UART" in linea: defaultUART=linea.strip("default_UART= ").strip("\n")         
 	if "Autofind" in linea: Autofind=linea.strip("Autofind= ").upper()
 
+"""
 print(baudrate)
 print(useDefaultUART)
 print(defaultUART)
 print(Autofind)
 input("vai!!!!>>>")
+"""
 
 menu_scelta_UART=[]
 if "YES" in Autofind:
@@ -47,6 +50,7 @@ if "YES" in Autofind:
                 menu_scelta_UART.append("None")
                 numeroUART=0
                 useDefaultUART="NO"
+                Autofind="YES"
         else:
                 if (useDefaultUART=="YES"):
                         print("No Arduino found in automode.... try to open default serial PORT specified in configuration file")
@@ -77,12 +81,12 @@ if (Autofind == "NO") and (useDefaultUART=="NO"):
                 #print("ports:", type(ports))
                 #if ('/dev/' in p.device): print("typeif:", type(p.device))
                 if ('/dev/tty' in p.device): lx_win="Linux"
-                    
-        if (lx_win=="Linux"):
-                menu_scelta_UART.append("/dev/ttyS0")
-                #print("ports",arduino_ports)
-
-        #input("avanti")
+        
+        ttyS0_Exists =  str(subprocess.check_output(['ls','-al','/dev']))
+        #print("output",ttyS0_Exists)
+        #input("output")
+        if "ttyS0" in str(ttyS0_Exists): menu_scelta_UART.append("/dev/ttyS0")
+		        
         menu_scelta_UART.append("Cancel")
 
         numeroUART = int(menu_scelta(menu_scelta_UART,True))
