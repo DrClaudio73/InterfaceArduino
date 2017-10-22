@@ -118,7 +118,6 @@ def decodifica_risposta(ser):
     while rcv != b'\xf8': #rimetti \xf8
         if not(debug):
             rcv = ser.read()
-            print("decodifica_risposta",rcv)
         else:
             rcv = b'\xf8' #rimetti \xf8
         if (i>1)and(i < 7): #CRC is evaluated only on byte
@@ -136,7 +135,6 @@ def decodifica_risposta(ser):
         if i==7:
             CRC_in_fdbck=rcv
         i=i+1
-    print("cmd_fdbck: ", cmd_fdbck)
     return([cmd_fdbck,pinNo_fdbck,argH+argL,err_fdbck,CRC_in_fdbck,totale%256])
 
 def TryGetAnswer(ser,cmd,pinNumber,arg,silent=False):
@@ -179,8 +177,7 @@ def TryGetAnswer(ser,cmd,pinNumber,arg,silent=False):
             print("message sent to Arduino: ",messaggio2)
         if not(debug):
             ser.write(messaggio2)
-            print(ser,"WW",messaggio2)
-
+            
         #split feedbck (received answer: should be made of command response + err code + received CRC + locally Calculayed CRC for comparison and validation
         if not(debug):
            fdbck=decodifica_risposta(ser)

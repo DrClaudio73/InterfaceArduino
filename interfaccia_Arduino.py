@@ -109,29 +109,33 @@ print("menu_scelta_UART: ",menu_scelta_UART)
 """
 
 def UART_Selected(s):
+	"""
 	print("combo val= ",UART_choice.get())
 	print("combo vals= ",s)
 	print("ports= ",ports)
 	print("menu_scelta_UART= ",menu_scelta_UART)
+	"""
 	#ser = serial.Serial(s, baudrate, timeout=3)
 	i=0
 	
 	for p in serial.tools.list_ports.comports():
-		print(s," YYY ",i," XXX ",p.device)
+		#print(s," YYY ",i," XXX ",p.device)
 		if s in p.device:
 			numeroUART=i
 		i=i+1
-	
-	if menu_scelta_UART[numeroUART+1]=="/dev/ttyS0":
+	print("test= ", s=="/dev/ttyS0", s in "/dev/ttyS0") 
+	if s=="/dev/ttyS0":
 		ser = serial.Serial("/dev/ttyS0", baudrate, timeout=3)
 	elif  (Autofind == "YES") or (useDefaultUART=="YES"):
 		ser = serial.Serial(menu_scelta_UART[1], baudrate, timeout=3)
 	else:
 		ser = serial.Serial(ports[numeroUART].device, baudrate, timeout=3)
 
-	print(numeroUART,ser)
 	ser.reset_input_buffer()
+	dormi(2) #let Arduino get started!
+	print(ser)
 	CreaDb(db,ser)
+	ArduinoReady.set("ricerca-google-pallini-colorati-1.png")
 	return(ser)
 
 app = App(title="Arduino Interface via Serial Port", width=700, height=500, layout="grid")
@@ -140,6 +144,7 @@ menu_scelta_UART_GUI=menu_scelta_UART[1:len(menu_scelta_UART)-1]
 
 UART_choice = Combo(app, options=menu_scelta_UART_GUI, command = UART_Selected, grid=[0,1], align="left")
 UART_text = Text(app, text="Which UART?", grid=[0,0], align="left")
+ArduinoReady = Picture(app,image="download.png", grid=[0,2])
 
 app.display()
 
