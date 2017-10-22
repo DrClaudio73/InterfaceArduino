@@ -4,6 +4,7 @@ from time import sleep as dormi
 from lib_menu import menu_scelta
 from lib_Arduino_Funcs import CreaDb, LeggiIn, ScriviOut, SetPinMode, GetPinMode, PrintArdStatus
 import serial.tools.list_ports
+from guizero import App, Text, TextBox, PushButton, Slider, Picture, Combo, CheckBox , ButtonGroup, info
 
 debug = False #allows working on development without having Arduino connected
 
@@ -36,6 +37,8 @@ print(Autofind)
 input("vai!!!!>>>")
 """
 
+#app = App(title="Interface Arduino on Serial Port", width=700, height=500, layout="grid")
+
 menu_scelta_UART=[]
 if "YES" in Autofind:
         arduino_ports = [
@@ -46,9 +49,10 @@ if "YES" in Autofind:
         #print("arduino_ports: ",arduino_ports)
         #print("arduino_ports[0]: ",arduino_ports[0])
         if len(arduino_ports)>0:
+                menu_scelta_UART.append(" ")
                 menu_scelta_UART.append(arduino_ports[0])
                 menu_scelta_UART.append("None")
-                numeroUART=0
+                numeroUART=1
                 useDefaultUART="NO"
                 Autofind="YES"
         else:
@@ -61,11 +65,12 @@ else:
         Autofind = "NO"
         
 if (Autofind == "NO") and (useDefaultUART=="YES"):
-        menu_scelta_UART.append(defaultUART)
-        menu_scelta_UART.append("None")
-        numeroUART=0
+	menu_scelta_UART.append(" ")
+	menu_scelta_UART.append(defaultUART)
+	menu_scelta_UART.append("None")
+	numeroUART=1
 else:
-        useDefaultUART="NO"
+    useDefaultUART="NO"
 
 if (Autofind == "NO") and (useDefaultUART=="NO"):
         menu_scelta_UART=["SELECTION OF SERIAL PORT NUMBER TO USE"]
@@ -99,6 +104,16 @@ print("useDefaultUART: ",useDefaultUART)
 print("menu_scelta_UART[numeroUART]: ",menu_scelta_UART[numeroUART])
 print("menu_scelta_UART: ",menu_scelta_UART)
 #input("AAAA:")
+
+app = App(title="Interface Arduino on Serial Port", width=700, height=500, layout="grid")
+
+menu_scelta_UART_GUI=menu_scelta_UART[1:len(menu_scelta_UART)-1]
+print("menu_scelta_UART_GUI", menu_scelta_UART_GUI)
+
+UART_choice = Combo(app, options=menu_scelta_UART_GUI, grid=[0,1], align="left")
+UART_description = Text(app, text="Which UART?", grid=[0,0], align="left")
+
+app.display()
 
 if not(debug):
 	if menu_scelta_UART[numeroUART+1]=="/dev/ttyS0":
