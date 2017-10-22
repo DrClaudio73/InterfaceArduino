@@ -125,7 +125,7 @@ def UART_Selected(s):
 	if menu_scelta_UART[numeroUART+1]=="/dev/ttyS0":
 		ser = serial.Serial("/dev/ttyS0", baudrate, timeout=3)
 	elif  (Autofind == "YES") or (useDefaultUART=="YES"):
-		ser = serial.Serial(menu_scelta_UART[numeroUART], baudrate, timeout=3)
+		ser = serial.Serial(menu_scelta_UART[1], baudrate, timeout=3)
 	else:
 		ser = serial.Serial(ports[numeroUART].device, baudrate, timeout=3)
 

@@ -1,4 +1,4 @@
 baudrate= 57200
-useDefaultUART= No
+useDefaultUART= Yes
 default_UART= /dev/ttyACM0
 Autofind= Yes
