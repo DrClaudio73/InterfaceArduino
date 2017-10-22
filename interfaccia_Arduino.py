@@ -94,24 +94,52 @@ if (Autofind == "NO") and (useDefaultUART=="NO"):
 		        
         menu_scelta_UART.append("Cancel")
 
-        numeroUART = int(menu_scelta(menu_scelta_UART,True))
-        if (numeroUART==len(menu_scelta_UART)-2):
-                print("Goodbye!!! ")
-                exit(0)
+        #numeroUART = int(menu_scelta(menu_scelta_UART,True))
+		
+        #if (numeroUART==len(menu_scelta_UART)-2):
+        #        print("Goodbye!!! ")
+        #        exit(0)
 
+"""
 print("Autofind: ",Autofind)
 print("useDefaultUART: ",useDefaultUART)
 print("menu_scelta_UART[numeroUART]: ",menu_scelta_UART[numeroUART])
 print("menu_scelta_UART: ",menu_scelta_UART)
-#input("AAAA:")
 
-app = App(title="Interface Arduino on Serial Port", width=700, height=500, layout="grid")
+"""
+
+def UART_Selected(s):
+	print("combo val= ",UART_choice.get())
+	print("combo vals= ",s)
+	print("ports= ",ports)
+	print("menu_scelta_UART= ",menu_scelta_UART)
+	#ser = serial.Serial(s, baudrate, timeout=3)
+	i=0
+	
+	for p in serial.tools.list_ports.comports():
+		print(s," YYY ",i," XXX ",p.device)
+		if s in p.device:
+			numeroUART=i
+		i=i+1
+	
+	if menu_scelta_UART[numeroUART+1]=="/dev/ttyS0":
+		ser = serial.Serial("/dev/ttyS0", baudrate, timeout=3)
+	elif  (Autofind == "YES") or (useDefaultUART=="YES"):
+		ser = serial.Serial(menu_scelta_UART[numeroUART], baudrate, timeout=3)
+	else:
+		ser = serial.Serial(ports[numeroUART].device, baudrate, timeout=3)
+
+	print(numeroUART,ser)
+	ser.reset_input_buffer()
+	CreaDb(db,ser)
+	return(ser)
+
+app = App(title="Arduino Interface via Serial Port", width=700, height=500, layout="grid")
 
 menu_scelta_UART_GUI=menu_scelta_UART[1:len(menu_scelta_UART)-1]
-print("menu_scelta_UART_GUI", menu_scelta_UART_GUI)
 
-UART_choice = Combo(app, options=menu_scelta_UART_GUI, grid=[0,1], align="left")
-UART_description = Text(app, text="Which UART?", grid=[0,0], align="left")
+UART_choice = Combo(app, options=menu_scelta_UART_GUI, command = UART_Selected, grid=[0,1], align="left")
+UART_text = Text(app, text="Which UART?", grid=[0,0], align="left")
 
 app.display()
 
@@ -119,7 +147,7 @@ if not(debug):
 	if menu_scelta_UART[numeroUART+1]=="/dev/ttyS0":
 		ser = serial.Serial("/dev/ttyS0", baudrate, timeout=3)
 	elif  (Autofind == "YES") or (useDefaultUART=="YES"):
-                ser = serial.Serial(menu_scelta_UART[numeroUART], baudrate, timeout=3)
+		ser = serial.Serial(menu_scelta_UART[numeroUART], baudrate, timeout=3)
 	else:
 		ser = serial.Serial(ports[numeroUART].device, baudrate, timeout=3)
 
