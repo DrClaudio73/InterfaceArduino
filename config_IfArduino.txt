@@ -1,4 +1,4 @@
-baudrate= 57200
+baudrate= 57600
 useDefaultUART= no
 default_UART= /dev/ttyACM0
 Autofind= Yes
