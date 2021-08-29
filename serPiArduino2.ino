@@ -88,7 +88,7 @@ void setup() {
   digitalWrite(13,LOW);
   
   //digitalWrite(13,HIGH); //turn on debugging LED delay(15000);
-  Serial.begin(57200);
+  Serial.begin(57600);
   /*while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }*/
